@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	  <% include ../partials/header.ejs %>
+	</head>
+	<body>
+		<% include ../partials/nav.ejs %>
+		<% include ../partials/json.ejs %>
+		<div id='lnData' class='main-data'>
+			<div><img class='lnLogo' src='/lnLogo.png'></div>
+			<div class='main-values'>
+				<div class='topic-row'><span class='topic'>First name:</span><span id='fsName'></span></div> 
+				<div class='topic-row'><span class='topic'>Last name:</span><span id='lsName'></span></div>
+				<div class='topic-row'><span class='topic'>Url:</span><a id='urlProfile'></a></div>
+				<div class='topic-row'><span class='topic'>Picture:</span><img id='picture'></div>
+			</div>
+		</div>
+		<script>
+			readJson('/api/v1/linkedin', function(data) {
+				if (!hasError(data)) {
+					document.getElementById('fsName').innerHTML = data.firstName;
+					document.getElementById('lsName').innerHTML = data.lastName;
+					document.getElementById('urlProfile').innerHTML = data.publicProfileUrl;
+					document.getElementById('picture').src = data.pictureUrl;
+				}
+				else
+					document.getElementById('lnData').innerHTML = "Net error";
+			});
+		</script>
+	</body>
+</html>

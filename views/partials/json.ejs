@@ -1,0 +1,18 @@
+<script>
+	function readJson(url, result) {
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+			if (xmlhttp.readyState == 4)
+				if (xmlhttp.status == 200)
+					result(JSON.parse(xmlhttp.responseText));
+				else
+					result(JSON.parse("{\"result\":\"error\", \"message\":\"reading error\"}"));
+		}
+		xmlhttp.open('get', url, true);
+		xmlhttp.send();
+	}
+
+	function hasError(json) {
+		return !json || (json.result && (json.result == "error" || json.result == "invalid"));
+	}
+</script>

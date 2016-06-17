@@ -1,0 +1,29 @@
+.navbar-brand {
+	padding:6px 30px;
+}
+	  
+.logo {
+    max-height: 40px;
+}
+
+.lnLogo {
+    max-height: 40px;
+}
+
+.main-data {
+	margin: 20px;
+}
+
+.main-values {
+	text-align: left;
+	display: inline-block;	
+}
+
+.main-values  span {
+    display: inline-block;
+}
+
+.topic  {
+	width: 100px;
+	font-weight: bold;
+}
