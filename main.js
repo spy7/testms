@@ -45,14 +45,15 @@ var connect = function(response) {
 	});
 }
 
-var selectAllUsers = function(db, response, end) {
+var selectAllUsers = function(db, response) {
 	var cursor = db.collection('testms').find();
+	var result = [];
 	cursor.each(function(err, doc) {
 		assert.equal(err, null);
 		if (doc != null)
-			response(doc);
+			result.push(doc);
 		else
-			end();
+			response(result);
 	});
 }
 
@@ -72,6 +73,10 @@ var updateUser = function(db, user, callback) {
 
 // Linkedin
 
+var urlLinkedin = function(user) {
+	return "https://api.linkedin.com/v1/people/" + user + ":(id,first-name,last-name,picture-url,public-profile-url)";
+}
+
 var readJson = function (url, token, result) {
 	var headers = { 'x-li-format' : 'json', 'Authorization': 'Bearer ' + token }
 	request({url:url, headers:headers}, function(err, response, body) {
@@ -84,10 +89,6 @@ var readJson = function (url, token, result) {
 	});
 }
 
-var urlLinkedin = function(user, path) {
-	return "https://api.linkedin.com/v1/people/" + user + path + ":(id,first-name,last-name,picture-url,public-profile-url)"
-}
-
 // API
 
 router.route('/v1/linkedin')
@@ -96,6 +97,31 @@ router.route('/v1/linkedin')
 			response.json(data);
 		});
 	})
+	
+router.route('/v1/mongo')
+	.get(function (request, response) {
+		connect(function(db, callback) {
+			selectAllUsers(db, function(data) {
+				response.json(data);
+				callback();
+			});
+		});
+	})
+	.post(function (request, response) {
+		connect(function(db, callback) {
+			updateUser(db, request.body, function(data) {
+				response.json("{result: 'ok'}");
+				callback();
+			});
+		});
+	})
 
-
-
+router.route('/v1/mongo/:id')
+	.get(function (request, response) {
+		connect(function(db, callback) {
+			selectUser(db, request.params.id, function(data) {
+				response.json(data);
+				callback();
+			});
+		});
+	})

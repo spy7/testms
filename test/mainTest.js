@@ -34,10 +34,13 @@ describe("Mongo", function() {
 		});
 	});
 	it("Select all users", function() {
+		var group = [];
+		group.push(user);
 		connect(function(db, callback) {
 			select(db, function(doc) {
-				expect(doc).to.equal(user);
-			}, callback);
+				expect(doc).to.equal(group);
+				callback();
+			});
 		});
 	});
 });

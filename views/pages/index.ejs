@@ -2,11 +2,17 @@
 <html>
 	<head>
 	  <% include ../partials/header.ejs %>
+	  <% include ../partials/signin.ejs %>
+	  <script type="text/javascript" src="script/read.js"></script>
 	</head>
 	<body>
 		<% include ../partials/nav.ejs %>
-		<% include ../partials/json.ejs %>
 		<div id='lnData' class='main-data'>
+			<div class="boxLn">
+				<div class="panel panel-default">
+					<span class="btLn"><script type="in/Login"></script></span>
+				</div>
+			</div>
 			<div><img class='lnLogo' src='/lnLogo.png'></div>
 			<div class='main-values'>
 				<div class='topic-row'><span class='topic'>First name:</span><span id='fsName'></span></div> 
@@ -15,17 +21,16 @@
 				<div class='topic-row'><span class='topic'>Picture:</span><img id='picture'></div>
 			</div>
 		</div>
+		<div class='main-data'>
+			<div class='boxHistory'>
+				<div class='panel panel-default'>
+					<div class='title'>Access log</div>
+					<div class="listHistory" id='history'></div>
+				</div>
+			</div>
+		</div>
 		<script>
-			readJson('/api/v1/linkedin', function(data) {
-				if (!hasError(data)) {
-					document.getElementById('fsName').innerHTML = data.firstName;
-					document.getElementById('lsName').innerHTML = data.lastName;
-					document.getElementById('urlProfile').innerHTML = data.publicProfileUrl;
-					document.getElementById('picture').src = data.pictureUrl;
-				}
-				else
-					document.getElementById('lnData').innerHTML = "Net error";
-			});
+			readLn();			
 		</script>
 	</body>
 </html>

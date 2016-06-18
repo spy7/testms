@@ -1,0 +1,29 @@
+<script type="text/javascript" src="//platform.linkedin.com/in.js">
+    api_key: 77g5309n98he6o
+    onLoad: onLinkedInLoad
+</script>
+
+<script type="text/javascript">
+    function onLinkedInLoad() {
+		IN.Event.on(IN, "auth", getProfileData);
+    }
+    function onSuccess(data) {
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+			if (xmlhttp.readyState == 4)
+				if (xmlhttp.status == 200) 
+					readDb();
+		}
+		xmlhttp.open('post', '/api/v1/mongo', true);
+		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		var url = Object.keys(data).map(function(k) { return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) }).join('&');
+		xmlhttp.send(url);
+		fillData(data);
+    }
+    function onError(error) { }
+    function getProfileData() {
+        IN.API.Raw("/people/~:(id,first-name,last-name,picture-url,public-profile-url)").result(onSuccess).error(onError);
+		IN.User.logout(onLinkedInLogout);
+    }
+	function onLinkedInLogout() { }
+</script>

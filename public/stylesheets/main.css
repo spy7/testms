@@ -12,6 +12,8 @@
 
 .main-data {
 	margin: 20px;
+	display: inline-block;
+	vertical-align: top;
 }
 
 .main-values {
@@ -26,4 +28,26 @@
 .topic  {
 	width: 100px;
 	font-weight: bold;
+}
+
+.boxLn {
+	width: 300px;
+	text-align: center;
+}
+
+.boxHistory {
+	width: 300px;
+}
+
+.btLn {
+	display: inline-block;
+	margin: 8px;
+}
+
+.title{
+	padding: 10px;
+}
+
+.listHistory {
+	padding: 10px;
 }
