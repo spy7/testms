@@ -1,5 +1,5 @@
-var rewire = require("rewire");
 var expect = require("chai").expect;
+var rewire = require("rewire");
 var main = rewire("../main.js");
 
 main.__get__('useDbTest')();
